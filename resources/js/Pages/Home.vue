@@ -49,7 +49,7 @@ const requestHelp = () => {
 
 <template>
     <div class="p-10">
-        <h1 class="text-2xl font-bold mb-4">Afet Yardım Platformu</h1>
+        <h1 class="">Afet Yardım </h1>
         <div id="map" style="width: 100%; height: 500px"></div>
         <button @click="requestHelp" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
             Yardım Talep Et
