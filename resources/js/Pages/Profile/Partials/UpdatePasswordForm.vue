@@ -3,6 +3,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Label from '@/components/ui/label/Label.vue';
+import Input from '@/components/ui/input/Input.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -36,21 +38,19 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">
-                Update Password
+            <h2 class="text-lg font-medium">
+                Şifreyi Güncelle
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                Ensure your account is using a long, random password to stay
-                secure.
+            <p class="mt-1 text-sm">
+                Hesabınızın güvende kalması için uzun ve rastgele bir parola kullandığınızdan emin olun.
             </p>
         </header>
 
         <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="current_password" value="Current Password" />
-
-                <TextInput
+                <Label>Mevcut Şifre</Label>
+                <Input
                     id="current_password"
                     ref="currentPasswordInput"
                     v-model="form.current_password"
@@ -66,9 +66,9 @@ const updatePassword = () => {
             </div>
 
             <div>
-                <InputLabel for="password" value="New Password" />
+                <Label>Yeni Şifre</Label>
 
-                <TextInput
+                <Input
                     id="password"
                     ref="passwordInput"
                     v-model="form.password"
@@ -81,12 +81,9 @@ const updatePassword = () => {
             </div>
 
             <div>
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
+                <Label>Yeni Şifre Tekrar</Label>
 
-                <TextInput
+                <Input
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
@@ -101,7 +98,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton :disabled="form.processing">Kaydet</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

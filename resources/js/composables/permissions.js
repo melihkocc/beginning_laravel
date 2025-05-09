@@ -6,7 +6,7 @@ export const usePermissions = () => {
     if (!permissions) {
         permissions = usePage().props?.partner?.permissions ?? [];
     }
-    const can = (permission) => {
+    const can = (permission) => {;
         return permissions.includes(permission);
     };
 

@@ -3,6 +3,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Button from '@/components/ui/button/Button.vue';
+import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 defineProps({
@@ -18,6 +21,7 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
+    surname: user.surname,
     email: user.email,
 });
 </script>
@@ -25,12 +29,12 @@ const form = useForm({
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">
-                Profile Information
+            <h2 class="text-lg font-medium">
+                Profil Bilgileri
             </h2>
 
-            <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
+            <p class="mt-1 text-sm">
+                Hesabınızın profil bilgilerini ve e-posta adresini güncelleyin.
             </p>
         </header>
 
@@ -39,9 +43,9 @@ const form = useForm({
             class="mt-6 space-y-6"
         >
             <div>
-                <InputLabel for="name" value="Name" />
+                <Label for="name">İsim</Label>
 
-                <TextInput
+                <Input
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
@@ -49,21 +53,40 @@ const form = useForm({
                     required
                     autofocus
                     autocomplete="name"
+                    placeholder="İsim"
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div>
-                <InputLabel for="email" value="Email" />
+                <Label for="surname">Soyisim</Label>
 
-                <TextInput
+                <Input
+                    id="surname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.surname"
+                    required
+                    autofocus
+                    autocomplete="surname"
+                    placeholder="Soyisim"
+                />
+
+                <InputError class="mt-2" :message="form.errors.surname" />
+            </div>
+
+            <div>
+                <Label for="email">E-posta</Label>
+
+                <Input
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
                     autocomplete="username"
+                    placeholder="E-posta"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
@@ -91,7 +114,7 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <Button variant="action" :disabled="form.processing">Kaydet</Button>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -103,7 +126,7 @@ const form = useForm({
                         v-if="form.recentlySuccessful"
                         class="text-sm text-gray-600"
                     >
-                        Saved.
+                        Kaydedildi.
                     </p>
                 </Transition>
             </div>

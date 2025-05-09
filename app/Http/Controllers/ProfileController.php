@@ -27,17 +27,24 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'min:3', "regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/u"],
+            'surname' => ['required', 'string', 'max:255', 'min:2', "regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/u"],
+        ], [
+            'name.required' => 'Ad zorunludur.',
+            'name.regex' => 'Ad yalnızca harf içerebilir.',
+        ]);
 
+        $request->user()->fill($validated);
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $request->user()->save();   
 
-        return Redirect::route('profile.edit');
+        return redirect()->route('profile.edit')->with('success', 'Profil başarıyla güncellendi.');
     }
 
     /**

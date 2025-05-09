@@ -99,9 +99,9 @@ import { usePage } from "@inertiajs/vue3";
 import { storeToRefs } from "pinia";
 
 const page = usePage();
-
+console.log(page.props);
 const { can, hasGroupPermission } = usePermissions();
-
+console.log(can(page.props.auth.user.plan))
 const { toast } = useToast();
 
 const props = defineProps({
@@ -162,8 +162,8 @@ const data = {
                     title: "Fırsatlar",
                     url: route("dashboard"),
                     icon: BriefcaseBusiness,
-                    isActive: page.url === "/leads",
-                    hasPermission: can("leads.index"),
+                    isActive: page.url === "/dashboard",
+                    hasPermission: can(page.props.auth.user.plan),
                 },
                 {
                     type: "single",
@@ -177,7 +177,7 @@ const data = {
                     url: route("dashboard"),
                     icon: SquarePen,
                     isActive: page.url === "/demands",
-                    hasPermission: can("demands.index"),
+                    hasPermission: can(page.props.auth.user.plan),
                 },
                 {
                     type: "single",
@@ -185,7 +185,7 @@ const data = {
                     url: route("dashboard"),
                     icon: FileUp,
                     isActive: page.url === "/proposals",
-                    hasPermission: can("proposals.index"),
+                    hasPermission: can(page.props.auth.user.plan),
                 },
                 {
                     type: "single",
@@ -193,7 +193,7 @@ const data = {
                     url: route("dashboard"),
                     icon: ShoppingCart,
                     isActive: page.url === "/orders",
-                    hasPermission: can("orders.index"),
+                    hasPermission: can(page.props.auth.user.plan),
                 },
                 {
                     type: "single",
@@ -207,7 +207,7 @@ const data = {
                     url: route("dashboard"),
                     icon: CheckCircle,
                     isActive: page.url === "/approvals",
-                    hasPermission: can("approvals.index"),
+                    hasPermission: can(page.props.auth.user.plan),
                 },
             ],
         },
@@ -228,6 +228,8 @@ function logout() {
             console.error("Logout işlemi başarısız:", error);
         });
 }
+
+
 </script>
 
 <template>
@@ -246,96 +248,14 @@ function logout() {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger as-child>
-                                <SidebarMenuButton
-                                    size="lg"
-                                    class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                                >
-                                    <div
-                                        class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
-                                    >
-                                        <img
-                                            v-if="activeOrganization?.logo"
-                                            :src="`/storage/${activeOrganization?.logo}`"
-                                            alt="Organization Logo"
-                                            class="h-full w-full rounded-lg object-cover"
-                                        />
-                                        <component
-                                            v-else
-                                            :is="Command"
-                                            class="size-4"
-                                        />
-                                    </div>
-                                    <div
-                                        class="grid flex-1 text-left text-sm leading-tight"
-                                    >
-                                        <span class="truncate font-semibold">{{
-                                            activeOrganization?.name
-                                        }}</span>
-                                        <span class="truncate text-xs">
-                                            {{ $page.props.auth.name }}
-                                        </span>
-                                    </div>
-                                    <ChevronsUpDown class="ml-auto" />
-                                </SidebarMenuButton>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                                align="start"
-                                side="bottom"
-                                :side-offset="4"
-                            >
-                                <DropdownMenuLabel
-                                    class="text-xs text-muted-foreground"
-                                >
-                                    Çalışma Alanları
-                                </DropdownMenuLabel>
-                                <DropdownMenuItem
-                                    v-for="(org, index) in $page.props.auth
-                                        .organizations"
-                                    :key="org.name"
-                                    class="gap-2 p-2"
-                                    @click="setActiveOrganization(org)"
-                                >
-                                    <div
-                                        class="flex size-6 items-center justify-center rounded-sm border"
-                                    >
-                                        <img
-                                            v-if="org.logo"
-                                            :src="`/storage/${org.logo}`"
-                                            alt="Organization Logo"
-                                            class="h-full w-full rounded-sm object-cover"
-                                        />
-                                        <component
-                                            v-else
-                                            :is="Command"
-                                            class="size-4 shrink-0"
-                                        />
-                                    </div>
-                                    {{ org.name }}
-                                    <DropdownMenuShortcut
-                                        >⌘{{ index + 1 }}</DropdownMenuShortcut
-                                    >
-                                </DropdownMenuItem>
-                                <!--
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem class="gap-2 p-2">
-                                        <div
-                                            class="flex size-6 items-center justify-center rounded-md border bg-background"
-                                        >
-                                            <Plus class="size-4" />
-                                        </div>
-                                        <div class="font-medium text-muted-foreground">Add team</div>
-                                    </DropdownMenuItem>
-                                -->
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <div class="p-2">
+                            Başlık
+                        </div>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <SidebarGroup v-for="item in dataFiltered" :key="item.title">
+                <SidebarGroup v-for="item in data.sideNav" :key="item.title">
                     <template v-if="item.type === 'single'">
                         <SidebarMenu>
                             <SidebarMenuItem>
@@ -586,7 +506,7 @@ function logout() {
                                 >
                                     <Avatar class="h-8 w-8 rounded-lg">
                                         <AvatarFallback class="rounded-lg">
-                                            {{ $page.props.auth.user.name[0] }}
+                                            {{ $page.props.auth.user.name[0] + $page.props.auth.user.surname[0] }}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div
@@ -656,16 +576,17 @@ function logout() {
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
-                                <!-- logout button with logout post request -->
-                                <DropdownMenuItem>
-                                    <Link
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem
+                                        :as="Link"
+                                        class="w-full cursor-pointer"
                                         :href="route('logout')"
                                         method="post"
-                                        as="button"
-                                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                        >Oturumu kapat</Link>
-                                </DropdownMenuItem>
-
+                                    >
+                                        <LogOut />
+                                        Oturumu kapat
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
@@ -729,7 +650,7 @@ function logout() {
                                     <Button variant="ghost">
                                         <Sun />
                                         <span class="sr-only rounded-lg">
-                                            {{ $page.props.auth.user.name[0] }}
+                                            {{ $page.props.auth.user.name[0] + $page.props.auth.user.surname[0] }}
                                         </span>
                                     </Button>
                                 </div>

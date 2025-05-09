@@ -1,21 +1,25 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import Label from "@/components/ui/label/Label.vue";
+import Input from "@/components/ui/input/Input.vue";
+import Button from "@/components/ui/button/Button.vue";
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    form.post(route("register"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 </script>
@@ -26,9 +30,8 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
+                <Label>İsim</Label>
+                <Input
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
@@ -40,11 +43,25 @@ const submit = () => {
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
+            <div>
+                <Label>Soyisim</Label>
 
+                <Input
+                    id="surname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.surname"
+                    required
+                    autofocus
+                    autocomplete="surname"
+                />
+
+                <InputError class="mt-2" :message="form.errors.surname" />
+            </div>
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <Label>E-posta</Label>
 
-                <TextInput
+                <Input
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -57,9 +74,9 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <Label>Şifre</Label>
 
-                <TextInput
+                <Input
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -72,12 +89,9 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
+                <Label>Şifre Tekrar</Label>
 
-                <TextInput
+                <Input
                     id="password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
@@ -92,21 +106,20 @@ const submit = () => {
                 />
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <div class="mt-4 flex flex-col items-center justify-center">
+                <Button
+                    class="w-full mb-5"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Kayıt Ol
+                </Button>
                 <Link
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered?
+                    Zaten kayıtlı mısın?
                 </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Register
-                </PrimaryButton>
             </div>
         </form>
     </GuestLayout>
