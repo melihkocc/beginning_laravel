@@ -12,7 +12,15 @@ import { Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
 import Title from "@/Components/Title.vue";
 import Textarea from "@/components/ui/textarea/Textarea.vue";
-
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 const form = useForm({
     name: "",
     surname: "",
@@ -37,14 +45,45 @@ const showPasswordRePassword = ref(false);
             <Title text="Doktor Olarak Kaydol" />
         </div>
         <form @submit.prevent="submit">
-            <div>
+            <div class="">
+                <FormField name="username">
+                    <FormItem>
+                        <FormLabel
+                            >Cinsiyet
+                            <span class="text-red-500">*</span></FormLabel
+                        >
+                        <FormControl>
+                            <Select v-model="form.gender">
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Cinsiyet Seç" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Cinsiyet</SelectLabel>
+                                        <SelectItem value="kadin">
+                                            Kadın
+                                        </SelectItem>
+                                        <SelectItem value="erkek">
+                                            Erkek
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </FormControl>
+                        <InputError
+                            class="mt-2"
+                            :message="form.errors.gender"
+                        />
+                    </FormItem>
+                </FormField>
+            </div>
+            <div class="mt-4">
                 <Label>İsim <span class="text-red-500">*</span></Label>
                 <Input
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    
                     autofocus
                     autocomplete="name"
                 />
@@ -59,7 +98,6 @@ const showPasswordRePassword = ref(false);
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.surname"
-                    
                     autofocus
                     autocomplete="surname"
                 />
@@ -74,7 +112,6 @@ const showPasswordRePassword = ref(false);
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
-                    
                     autocomplete="username"
                 />
 
@@ -82,7 +119,10 @@ const showPasswordRePassword = ref(false);
             </div>
 
             <div class="mt-4">
-                <Label>Özgeçmiş (Açıklama) <span class="text-red-500">*</span></Label>
+                <Label
+                    >Özgeçmiş (Açıklama)
+                    <span class="text-red-500">*</span></Label
+                >
 
                 <Textarea
                     id="description"
@@ -105,7 +145,6 @@ const showPasswordRePassword = ref(false);
                         :type="showPassword ? 'text' : 'password'"
                         class="mt-1 block w-full"
                         v-model="form.password"
-                        
                         autocomplete="new-password"
                     />
                     <span
@@ -139,7 +178,6 @@ const showPasswordRePassword = ref(false);
                         :type="showPasswordRePassword ? 'text' : 'password'"
                         class="mt-1 block w-full"
                         v-model="form.password_confirmation"
-                        
                         autocomplete="new-password"
                     />
 

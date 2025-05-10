@@ -175,6 +175,15 @@ const data = {
 
                 {
                     type: "single",
+                    title: "Kadın Hastalıkları",
+                    url: route("women-disease.index"),
+                    icon: BriefcaseBusiness,
+                    isActive: page.url === "/women-disease",
+                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                },
+
+                {
+                    type: "single",
                     title: "Talepler",
                     url: route("dashboard"),
                     icon: SquarePen,

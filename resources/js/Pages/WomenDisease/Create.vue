@@ -28,42 +28,46 @@ import { string } from "zod";
 
 const breadcrumbs = ref([
     {
-        title: "Cinsel Hastalık Kayıtlarınız",
-        route: route("sexually-disease.index"),
+        title: "Kadın Hastalıkları Kayıtlarınız",
+        route: route("women-disease.index"),
     },
     {
-        title: "Cinsel Hastalık Kaydı Oluştur",
+        title: "Kadın Hastalıkları Kaydı Oluştur",
     },
 ]);
 
 const form = useForm({
-    age: "",
-    stream: "",
-    is_more_stream: null,
-    smell: "",
-    color: "",
+    hpv: "",
+    cigarette: "",
+    early_sexual: "",
+    sexual_blood: "",
+    bad_smell_stream: "",
+    urine_blood: "",
     edema: "",
-    burning_urine: "",
-    itching_or_burning: "",
-    sankr: "",
-    lenf_node: null,
-    plaque_rash: "",
-    vezikul: "",
-    need_to_urinate: "",
+    more_pregnancy: "",
+    adet_blood: "",
+    pressure: "",
+    menepoz_blood: "",
+    late_menepoz: "",
+    special_1: "",
+    special_2: "",
 });
 
 const submit = () => {
+    form.age = String(form.age);
     form.post(route("women-disease.store"));
 };
 </script>
 
 <template>
-    <Head title="Cinsel Hastalık Kaydı Oluştur" />
+    <Head title="Kadın Hastalıkları Kaydı Oluştur" />
 
     <AuthenticatedLayout :breadcrumbs="breadcrumbs">
         <div class="container mx-auto p-4">
             <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
-                <div><Title text="Cinsel Hastalık Kaydı Oluştur" /></div>
+                <div class="text-start">
+                    <Title text="Kadın Hastalıkları Kaydı Oluştur" />
+                </div>
                 <div
                     class="flex lg:justify-end md:justify-end justify-start items-center"
                 >
@@ -76,37 +80,14 @@ const submit = () => {
                 <div
                     class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5"
                 >
-                    <FormField name="age">
+                    <FormField name="hpv">
                         <FormItem>
                             <FormLabel
-                                >Yaş
+                                >HPV Enfeksiyonunuz Var Mı?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Input
-                                    type="number"
-                                    id="age"
-                                    placeholder="Yaş"
-                                    v-model="form.age"
-                                    required
-                                    autofocus
-                                    min="0"
-                                />
-                            </FormControl>
-                            <InputError
-                                class="input-error mt-2"
-                                :message="form.errors.age"
-                            />
-                        </FormItem>
-                    </FormField>
-                    <FormField name="stream">
-                        <FormItem>
-                            <FormLabel
-                                >Akıntınız Var Mı?
-                                <span class="text-red-500">*</span></FormLabel
-                            >
-                            <FormControl>
-                                <Select v-model="form.stream">
+                                <Select v-model="form.hpv">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -124,18 +105,47 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.stream"
+                                :message="form.errors.hpv"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="is_more_stream">
+                    <FormField name="cigarette">
                         <FormItem>
                             <FormLabel
-                                >Akıntı Fazla Miktarda mı?
+                                >Sigara Kullanıyor Musunuz?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.is_more_stream">
+                                <Select v-model="form.cigarette">
+                                    <SelectTrigger class="w-full">
+                                        <SelectValue placeholder="Seçiniz.." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="1">
+                                                Evet
+                                            </SelectItem>
+                                            <SelectItem value="0">
+                                                Hayır
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <InputError
+                                class="input-error mt-2"
+                                :message="form.errors.cigarette"
+                            />
+                        </FormItem>
+                    </FormField>
+                    <FormField name="early_sexual">
+                        <FormItem>
+                            <FormLabel
+                                >Erken Yaşta Cinsel İlişkiniz Oldu Mu?
+                                <span class="text-red-500">*</span></FormLabel
+                            >
+                            <FormControl>
+                                <Select v-model="form.early_sexual">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -147,37 +157,34 @@ const submit = () => {
                                             <SelectItem value="0"
                                                 >Hayır</SelectItem
                                             >
-                                            <SelectItem :value="null">
-                                                Emin Değilim
-                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.is_more_stream"
+                                :message="form.errors.early_sexual"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="smell">
+                    <FormField name="sexual_blood">
                         <FormItem>
                             <FormLabel
-                                >Kokuyu Tarif Edin?
+                                >Cinsel İlişki Sonrası Kanamanız Oluyor Mu?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.smell">
+                                <Select v-model="form.sexual_blood">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectItem value="kotukokulu">
-                                                Kötü Kokulu
+                                            <SelectItem value="1">
+                                                Evet
                                             </SelectItem>
-                                            <SelectItem value="kokusuz"
-                                                >Kokusuz</SelectItem
+                                            <SelectItem value="0"
+                                                >Hayır</SelectItem
                                             >
                                         </SelectGroup>
                                     </SelectContent>
@@ -185,31 +192,57 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.smell"
+                                :message="form.errors.sexual_blood"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="color">
+                    <FormField name="bad_smell_stream">
                         <FormItem>
                             <FormLabel
-                                >Akıntı Rengi Nasıl?
+                                >Kötü Kokulu Akıntınız Var Mı?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.color">
+                                <Select v-model="form.bad_smell_stream">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectItem value="sariyesil">
-                                                Sarı - Yeşil
+                                            <SelectItem value="1">
+                                                Evet
                                             </SelectItem>
-                                            <SelectItem value="beyazsari"
-                                                >Beyaz - Sarı</SelectItem
+                                            <SelectItem value="0"
+                                                >Hayır</SelectItem
                                             >
-                                            <SelectItem value="seffaf">
-                                                Şeffaf ve Jelimsi Kıvamda
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <InputError
+                                class="input-error mt-2"
+                                :message="form.errors.bad_smell_stream"
+                            />
+                        </FormItem>
+                    </FormField>
+                    <FormField name="urine_blood">
+                        <FormItem>
+                            <FormLabel
+                                >İdrarda Kanamanız Var Mı?
+                                <span class="text-red-500">*</span></FormLabel
+                            >
+                            <FormControl>
+                                <Select v-model="form.urine_blood">
+                                    <SelectTrigger class="w-full">
+                                        <SelectValue placeholder="Seçiniz.." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="1">
+                                                Evet
+                                            </SelectItem>
+                                            <SelectItem value="0">
+                                                Hayır
                                             </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
@@ -217,7 +250,7 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.color"
+                                :message="form.errors.urine_blood"
                             />
                         </FormItem>
                     </FormField>
@@ -250,14 +283,14 @@ const submit = () => {
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="burning_urine">
+                    <FormField name="more_pregnancy">
                         <FormItem>
                             <FormLabel
-                                >İdrar Yaparken Yanma Hissediyor Musunuz?
+                                >Birden Çok Gebelik Geçirdiniz Mi?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.burning_urine">
+                                <Select v-model="form.more_pregnancy">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -275,18 +308,19 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.burning_urine"
+                                :message="form.errors.more_pregnancy"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="itching_or_burning">
+                    <FormField name="adet_blood">
                         <FormItem>
                             <FormLabel
-                                >Kaşıntı veya yanma hissiniz var mı?
+                                >Adet Kanamanızda Anormallikler (yoğunlaşma,
+                                arada bir kanama, uzun ve fazla olması) Var Mı?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.itching_or_burning">
+                                <Select v-model="form.adet_blood">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -304,19 +338,18 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.itching_or_burning"
+                                :message="form.errors.adet_blood"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="sankr">
+                    <FormField name="pressure">
                         <FormItem>
                             <FormLabel
-                                >Düzgün Kenarlı Ağrısız Sert Yuvarlak Cilt
-                                Lezyonu (Şankr) Var Mı?
+                                >Kasık - Belde Basınç Hissi Var Mı?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.sankr">
+                                <Select v-model="form.pressure">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -334,18 +367,18 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.sankr"
+                                :message="form.errors.pressure"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="lenf_node">
+                    <FormField name="menepoz_blood">
                         <FormItem>
                             <FormLabel
-                                >Lenf Nodlarınızda Şişme Var Mı?
+                                >Menepoz Sonrası Kanamalarınız Oluyor Mu?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.lenf_node">
+                                <Select v-model="form.menepoz_blood">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -357,27 +390,24 @@ const submit = () => {
                                             <SelectItem value="0">
                                                 Hayır
                                             </SelectItem>
-                                            <SelectItem :value="null">
-                                                Bilmiyorum
-                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.lenf_node"
+                                :message="form.errors.menepoz_blood"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="plaque_rash">
+                    <FormField name="late_menepoz">
                         <FormItem>
                             <FormLabel
-                                >Nemli Bölgelerinizde Plak veya Döküntü Var Mı?
+                                >Menepoza Geç Mi Girdiniz Mi?
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.plaque_rash">
+                                <Select v-model="form.late_menepoz">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
@@ -395,29 +425,39 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.plaque_rash"
+                                :message="form.errors.late_menepoz"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="need_to_urinate">
+                    <FormField name="special_1">
                         <FormItem>
                             <FormLabel
-                                >İdrar Yapma İhtiyacı Hissedip İdrarınız
-                                Yapamadığınız Oluyor Mu
+                                >(Fazla kilolu - Diyabet - Polikistik Over
+                                Sendromu - Daha önce doğum yapmayan) Kaç tanesi
+                                sizi tanımlıyor
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.need_to_urinate">
+                                <Select v-model="form.special_1">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectItem value="1">
-                                                Evet
-                                            </SelectItem>
                                             <SelectItem value="0">
-                                                Hayır
+                                                0
+                                            </SelectItem>
+                                            <SelectItem value="1">
+                                                1
+                                            </SelectItem>
+                                            <SelectItem value="2">
+                                                2
+                                            </SelectItem>
+                                            <SelectItem value="3">
+                                                3
+                                            </SelectItem>
+                                            <SelectItem value="4">
+                                                4
                                             </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
@@ -425,29 +465,42 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.need_to_urinate"
+                                :message="form.errors.special_1"
                             />
                         </FormItem>
                     </FormField>
-                    <FormField name="vezikul">
+                    <FormField name="special_2">
                         <FormItem>
                             <FormLabel
-                                >Ağrı Hassasiyet ve Genital Bölgenizde İçi Sıvı
-                                Dolu Kabarcıklar (Vezikül) Var Mı?
+                                >(İdrar yaparken ağrı, Çok idrar yapma, Ani
+                                sıkışma hissi, Kanlı İdrar, Kötü koku idrar
+                                yapma) Kaç Tanesi Sizi Tanımlıyor
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Select v-model="form.vezikul">
+                                <Select v-model="form.special_2">
                                     <SelectTrigger class="w-full">
                                         <SelectValue placeholder="Seçiniz.." />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectItem value="1">
-                                                Evet
-                                            </SelectItem>
                                             <SelectItem value="0">
-                                                Hayır
+                                                0
+                                            </SelectItem>
+                                            <SelectItem value="1">
+                                                1
+                                            </SelectItem>
+                                            <SelectItem value="2">
+                                                2
+                                            </SelectItem>
+                                            <SelectItem value="3">
+                                                3
+                                            </SelectItem>
+                                            <SelectItem value="4">
+                                                4
+                                            </SelectItem>
+                                            <SelectItem value="5">
+                                                5
                                             </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
@@ -455,7 +508,7 @@ const submit = () => {
                             </FormControl>
                             <InputError
                                 class="input-error mt-2"
-                                :message="form.errors.vezikul"
+                                :message="form.errors.special_2"
                             />
                         </FormItem>
                     </FormField>

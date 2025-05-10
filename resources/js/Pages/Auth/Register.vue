@@ -64,7 +64,7 @@ const showPasswordRePassword = ref(false);
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        <SelectLabel>Fruits</SelectLabel>
+                                        <SelectLabel>Cinsiyet</SelectLabel>
                                         <SelectItem value="kadin">
                                             Kadın
                                         </SelectItem>

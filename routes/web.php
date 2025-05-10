@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SexuallyDiseaseController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WomenDiseaseController;
 use App\Http\Middleware\CheckVerifyStatus;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,13 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('sexually-disease'
     Route::get('/create', [SexuallyDiseaseController::class, 'create'])->name('sexually-disease.create');
     Route::post('/', [SexuallyDiseaseController::class, 'store'])->name('sexually-disease.store');
     Route::get('/{sexuallyDisease}', [SexuallyDiseaseController::class, 'show'])->name('sexually-disease.show');
+});
+
+Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('women-disease')->group(function () {
+    Route::get('/', [WomenDiseaseController::class, 'index'])->name('women-disease.index');
+    Route::get('/create', [WomenDiseaseController::class, 'create'])->name('women-disease.create');
+    Route::post('/', [WomenDiseaseController::class, 'store'])->name('women-disease.store');
+    Route::get('/{womenDisease}', [WomenDiseaseController::class, 'show'])->name('women-disease.show');
 });
 
 

@@ -22,6 +22,14 @@ return new class extends Migration
             $table->string('plan')->default('free');
             $table->string('status')->default('aktif');
             $table->string('description', 1000)->nullable(); // Description için uzunluğu arttırdık
+            $table->string('specialization')->nullable(); // Description için uzunluğu arttırdık
+            $table->string('years_of_experience')->nullable(); // Description için uzunluğu arttırdık
+            $table->string('clinic_name')->nullable(); // Description için uzunluğu arttırdık
+            $table->string('city')->nullable(); // Description için uzunluğu arttırdık
+            $table->string('district')->nullable(); // Description için uzunluğu arttırdık
+            $table->json('ratings')->nullable(); // Description için uzunluğu arttırdık
+            $table->float('consultation_price')->nullable(); // Description için uzunluğu arttırdık
+
             $table->rememberToken();
             $table->timestamps();
         });
