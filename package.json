@@ -36,7 +36,7 @@
         "clsx": "^2.1.1",
         "dayjs": "^1.11.13",
         "embla-carousel-vue": "^8.6.0",
-        "firebase": "^11.6.1",
+        "firebase": "^11.7.1",
         "localforage": "^1.10.0",
         "lucide-vue-next": "^0.508.0",
         "reka-ui": "^2.2.1",

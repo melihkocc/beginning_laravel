@@ -166,7 +166,7 @@ const data = {
 
                 {
                     type: "single",
-                    title: "Kadın Cinsel Hastalıklar",
+                    title: "Cinsel Yolla Bulaşan Hastalıklar",
                     url: route("sexually-disease.index"),
                     icon: BriefcaseBusiness,
                     isActive: page.url === "/sexually-disease",
@@ -179,6 +179,16 @@ const data = {
                     url: route("women-disease.index"),
                     icon: BriefcaseBusiness,
                     isActive: page.url === "/women-disease",
+                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                },
+
+
+                {
+                    type: "single",
+                    title: "Yardım Taleplerim",
+                    url: route("help-disease.index"),
+                    icon: BriefcaseBusiness,
+                    isActive: page.url === "/help/disease",
                     hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
                 },
 

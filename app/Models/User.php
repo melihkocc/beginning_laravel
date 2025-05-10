@@ -26,7 +26,15 @@ class User extends Authenticatable
         'password',
         'plan',
         'description',
-        'status'
+        'status',
+        'specialization',
+        'years_of_experience',
+        'clinic_name',
+        'city',
+        'district',
+        'address',
+        'consultation_price',
+
     ];
 
     /**
@@ -70,5 +78,16 @@ class User extends Authenticatable
     public function womenDiseases()
     {
         return $this->hasMany(WomenDisease::class);
+    }
+
+    public function helpsAsPatient()
+    {
+        return $this->hasMany(Help::class, 'patient_id');
+    }
+
+    // Doktor olarak yardım ettiklerim
+    public function helpsAsDoctor()
+    {
+        return $this->hasMany(Help::class, 'doctor_id');
     }
 }

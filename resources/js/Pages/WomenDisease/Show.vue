@@ -2,7 +2,7 @@
 import Title from "@/Components/Title.vue";
 import Button from "@/components/ui/button/Button.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, Link, usePage } from "@inertiajs/vue3";
 import { Hospital } from "lucide-vue-next";
 import { computed, ref } from "vue";
 const breadcrumbs = ref([
@@ -50,9 +50,11 @@ const formatAnswer = (value) => {
                 <div
                     class="flex lg:justify-end md:justify-end justify-start items-center"
                 >
-                    <Button processbutton>
-                        <Hospital class="w-4 h-4 mr-2" /> Uzman Yardım Al
-                    </Button>
+                    <Link :href="route('find-doctor.index')">
+                        <Button processbutton>
+                            <Hospital class="w-4 h-4 mr-2" /> Uzman Yardım Al
+                        </Button>
+                    </Link>
                 </div>
             </div>
 

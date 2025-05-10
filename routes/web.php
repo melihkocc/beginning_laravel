@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HelpController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SexuallyDiseaseController;
 use App\Http\Controllers\UserController;
@@ -52,5 +53,20 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('women-disease')->
     Route::get('/{womenDisease}', [WomenDiseaseController::class, 'show'])->name('women-disease.show');
 });
 
+Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('help')->group(function () {
+
+    //ortak
+
+
+
+    /// disease
+    Route::get('/disease', [HelpController::class, 'diseaseIndex'])->name('help-disease.index');
+    Route::get('/find-doctor', [HelpController::class, 'findDoctor'])->name('find-doctor.index');
+    Route::post('/', [HelpController::class, 'storeHelp'])->name('help.store');
+    Route::get('/{help}/show-disease', [HelpController::class, 'showHelpDisease'])->name('help-show-disease.index');
+
+    ///doctor
+    Route::get('/doctor', [HelpController::class, 'doctorIndex'])->name('help-doctor.index');
+});
 
 require __DIR__ . '/auth.php';

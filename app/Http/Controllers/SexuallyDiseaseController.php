@@ -82,7 +82,7 @@ class SexuallyDiseaseController extends Controller
         $topScore = current($scores);
 
         // Eğer hiç belirti eşleşmediyse
-        if ($topScore === 0) {
+        if ($topScore <= 2) {
             return [
                 'result' => 'Cinsel Yolla Bulaşan Bir Hastalığa Sahip Olma Riskiniz Düşüktür.',
                 'description' => [
