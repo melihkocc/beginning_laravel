@@ -10,6 +10,8 @@ import Label from "@/components/ui/label/Label.vue";
 import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { route } from "ziggy-js";
+import { ref } from "vue";
+import { Eye, EyeOff } from "lucide-vue-next";
 
 defineProps({
     canResetPassword: {
@@ -31,6 +33,8 @@ const submit = () => {
         onFinish: () => form.reset("password"),
     });
 };
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -60,14 +64,33 @@ const submit = () => {
             <div class="mt-4">
                 <Label>Şifre</Label>
 
-                <Input
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
+                <div class="relative">
+                    <Input
+                        id="password"
+                        :type="showPassword ? 'text' : 'password'"
+                        class="mt-1 block w-full"
+                        v-model="form.password"
+                        required
+                        autocomplete="current-password"
+                    />
+                    <span
+                        class="absolute right-0 top-0 flex size-10 items-center justify-center"
+                    >
+                        <button
+                            type="button"
+                            @click="showPassword = !showPassword"
+                            :aria-label="
+                                showPassword
+                                    ? 'Parolayı gizle'
+                                    : 'Parolayı göster'
+                            "
+                            class="text-muted-foreground hover:text-primary"
+                        >
+                            <EyeOff size="18" v-if="showPassword" />
+                            <Eye size="18" v-else />
+                        </button>
+                    </span>
+                </div>
 
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>

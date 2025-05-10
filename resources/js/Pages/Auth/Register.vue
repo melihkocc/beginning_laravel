@@ -8,6 +8,8 @@ import { Head, Link, useForm } from "@inertiajs/vue3";
 import Label from "@/components/ui/label/Label.vue";
 import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
+import { Eye, EyeOff } from "lucide-vue-next";
+import { ref } from "vue";
 
 const form = useForm({
     name: "",
@@ -22,6 +24,9 @@ const submit = () => {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
+const showPassword = ref(false);
+const showPasswordRePassword = ref(false);
+
 </script>
 
 <template>
@@ -43,7 +48,7 @@ const submit = () => {
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
-            <div>
+            <div class="mt-4">
                 <Label>Soyisim</Label>
 
                 <Input
@@ -76,14 +81,33 @@ const submit = () => {
             <div class="mt-4">
                 <Label>Şifre</Label>
 
-                <Input
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+                <div class="relative">
+                    <Input
+                        id="password"
+                        :type="showPassword ? 'text' : 'password'"
+                        class="mt-1 block w-full"
+                        v-model="form.password"
+                        required
+                        autocomplete="new-password"
+                    />
+                    <span
+                        class="absolute right-0 top-0 flex size-10 items-center justify-center"
+                    >
+                        <button
+                            type="button"
+                            @click="showPassword = !showPassword"
+                            :aria-label="
+                                showPassword
+                                    ? 'Parolayı gizle'
+                                    : 'Parolayı göster'
+                            "
+                            class="text-muted-foreground hover:text-primary"
+                        >
+                            <EyeOff size="18" v-if="showPassword" />
+                            <Eye size="18" v-else />
+                        </button>
+                    </span>
+                </div>
 
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
@@ -91,14 +115,34 @@ const submit = () => {
             <div class="mt-4">
                 <Label>Şifre Tekrar</Label>
 
-                <Input
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
+                <div class="relative">
+                    <Input
+                        id="password_confirmation"
+                        :type="showPasswordRePassword ? 'text' : 'password'"
+                        class="mt-1 block w-full"
+                        v-model="form.password_confirmation"
+                        required
+                        autocomplete="new-password"
+                    />
+
+                    <span
+                        class="absolute right-0 top-0 flex size-10 items-center justify-center"
+                    >
+                        <button
+                            type="button"
+                            @click="showPasswordRePassword = !showPasswordRePassword"
+                            :aria-label="
+                                showPasswordRePassword
+                                    ? 'Parolayı gizle'
+                                    : 'Parolayı göster'
+                            "
+                            class="text-muted-foreground hover:text-primary"
+                        >
+                            <EyeOff size="18" v-if="showPasswordRePassword" />
+                            <Eye size="18" v-else />
+                        </button>
+                    </span>
+                </div>
 
                 <InputError
                     class="mt-2"

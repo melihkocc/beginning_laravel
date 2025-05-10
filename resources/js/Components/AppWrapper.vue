@@ -101,7 +101,7 @@ import { storeToRefs } from "pinia";
 const page = usePage();
 console.log(page.props);
 const { can, hasGroupPermission } = usePermissions();
-console.log(can(page.props.auth.user.plan))
+console.log(can(page.props.auth.user.plan));
 const { toast } = useToast();
 
 const props = defineProps({
@@ -211,6 +211,21 @@ const data = {
                 },
             ],
         },
+        {
+            type: "group",
+            checkPermission: true,
+            title: "Admin",
+            items: [
+                {
+                    type: "single",
+                    title: "Kullanıcılar",
+                    url: route("users.index"),
+                    icon: BriefcaseBusiness,
+                    isActive: page.url === "/users",
+                    hasPermission: can(page.props.auth.user.plan),
+                },
+            ],
+        },
     ],
 };
 
@@ -228,8 +243,6 @@ function logout() {
             console.error("Logout işlemi başarısız:", error);
         });
 }
-
-
 </script>
 
 <template>
@@ -248,9 +261,7 @@ function logout() {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <div class="p-2">
-                            Başlık
-                        </div>
+                        <div class="p-2">Başlık</div>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
@@ -506,7 +517,10 @@ function logout() {
                                 >
                                     <Avatar class="h-8 w-8 rounded-lg">
                                         <AvatarFallback class="rounded-lg">
-                                            {{ $page.props.auth.user.name[0] + $page.props.auth.user.surname[0] }}
+                                            {{
+                                                $page.props.auth.user.name[0] +
+                                                $page.props.auth.user.surname[0]
+                                            }}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div
@@ -650,7 +664,10 @@ function logout() {
                                     <Button variant="ghost">
                                         <Sun />
                                         <span class="sr-only rounded-lg">
-                                            {{ $page.props.auth.user.name[0] + $page.props.auth.user.surname[0] }}
+                                            {{
+                                                $page.props.auth.user.name[0] +
+                                                $page.props.auth.user.surname[0]
+                                            }}
                                         </span>
                                     </Button>
                                 </div>

@@ -33,8 +33,26 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => 'İsim alanı zorunludur.',
+            'name.string' => 'İsim metin olmalıdır.',
+            'name.max' => 'İsim en fazla 255 karakter olabilir.',
+
+            'surname.required' => 'Soyisim alanı zorunludur.',
+            'surname.string' => 'Soyisim metin olmalıdır.',
+            'surname.max' => 'Soyisim en fazla 255 karakter olabilir.',
+
+            'email.required' => 'E-posta adresi zorunludur.',
+            'email.string' => 'E-posta metin olmalıdır.',
+            'email.lowercase' => 'E-posta küçük harf olmalıdır.',
+            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
+            'email.max' => 'E-posta en fazla 255 karakter olabilir.',
+            'email.unique' => 'Bu e-posta adresi zaten kullanılıyor.',
+
+            'password.required' => 'Şifre alanı zorunludur.',
+            'password.confirmed' => 'Şifreler eşleşmiyor.',
         ]);
 
         $user = User::create([
