@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->roles()->first()?->permissionGroups->pluck('id')->toArray();
     }
+
+    public function sexuallyDiseases()
+    {
+        return $this->hasMany(SexuallyDisease::class);
+    }
 }

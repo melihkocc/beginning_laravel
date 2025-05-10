@@ -161,8 +161,18 @@ const data = {
                     url: route("dashboard"),
                     icon: BriefcaseBusiness,
                     isActive: page.url === "/dashboard",
-                    hasPermission: page.props.auth.user.plan === 'doctor',
+                    hasPermission: page.props.auth.user.plan === "doctor",
                 },
+
+                {
+                    type: "single",
+                    title: "Kadın Cinsel Hastalıklar",
+                    url: route("sexually-disease.index"),
+                    icon: BriefcaseBusiness,
+                    isActive: page.url === "/sexually-disease",
+                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                },
+
                 {
                     type: "single",
                     title: "Talepler",

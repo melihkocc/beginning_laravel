@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SexuallyDiseaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckVerifyStatus;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,13 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('users')->group(fu
     Route::patch('/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
     Route::patch('/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
+});
+
+Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('sexually-disease')->group(function () {
+    Route::get('/', [SexuallyDiseaseController::class, 'index'])->name('sexually-disease.index');
+    Route::get('/create', [SexuallyDiseaseController::class, 'create'])->name('sexually-disease.create');
+    Route::post('/', [SexuallyDiseaseController::class, 'store'])->name('sexually-disease.store');
+    Route::get('/{sexuallyDisease}', [SexuallyDiseaseController::class, 'show'])->name('sexually-disease.show');
 });
 
 
