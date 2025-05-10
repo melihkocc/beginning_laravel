@@ -56,6 +56,15 @@ class WomenDiseaseController extends Controller
         // Akut veya Kronik Sistit
         if ($data['special_2'] >= 2) $scores['Akut veya Kronik Sistit'] += $data['special_2'];
 
+        // Tüm puanlar 1'den düşükse risk bulunmamaktadır
+        $maxScore = max($scores);
+        if ($maxScore < 2) {
+            return [
+                'result' => 'Belirtilere göre riskli bir durum gözlemlenmemektedir.',
+                'description' => ['Belirtiler ciddi bir hastalık riski oluşturacak seviyede değil.', 'Düzenli kontrollerinizi ihmal etmeyiniz.'],
+            ];
+        }
+
         // En yüksek puanlı sonucu al
         $result = collect($scores)->sortDesc()->keys()->first();
 
@@ -85,9 +94,10 @@ class WomenDiseaseController extends Controller
 
         return [
             'result' => $result,
-            'description' => $descriptions[$result] ?? ['Belirtiler net bir sonuç vermemektedir. Lütfen uzman doktora başvurunuz.'],
+            'description' => $descriptions[$result],
         ];
     }
+
 
 
     public function store(Request $request)

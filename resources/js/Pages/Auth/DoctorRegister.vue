@@ -11,7 +11,6 @@ import Button from "@/components/ui/button/Button.vue";
 import { Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
 import Title from "@/Components/Title.vue";
-import Textarea from "@/components/ui/textarea/Textarea.vue";
 import {
     Select,
     SelectContent,
@@ -21,10 +20,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import Textarea from "@/components/ui/textarea/Textarea.vue";
 const form = useForm({
     name: "",
     surname: "",
     email: "",
+    specialization: "",
+    years_of_experience: "",
+    clinic_name: "",
+    city: "",
+    district: "",
+    address: "",
+    consultation_price: "",
     description: "",
     password: "",
     password_confirmation: "",
@@ -40,6 +57,7 @@ const showPasswordRePassword = ref(false);
 </script>
 
 <template>
+    <Head title="Kayıt Ol"/>
     <GuestLayout>
         <div class="mb-3 text-center">
             <Title text="Doktor Olarak Kaydol" />
@@ -77,32 +95,34 @@ const showPasswordRePassword = ref(false);
                     </FormItem>
                 </FormField>
             </div>
-            <div class="mt-4">
-                <Label>İsim <span class="text-red-500">*</span></Label>
-                <Input
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    autofocus
-                    autocomplete="name"
-                />
+            <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
+                <div class="mt-4">
+                    <Label>İsim <span class="text-red-500">*</span></Label>
+                    <Input
+                        id="name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.name"
+                        autofocus
+                        autocomplete="name"
+                    />
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-            <div class="mt-4">
-                <Label>Soyisim <span class="text-red-500">*</span></Label>
+                    <InputError class="mt-2" :message="form.errors.name" />
+                </div>
+                <div class="mt-4">
+                    <Label>Soyisim <span class="text-red-500">*</span></Label>
 
-                <Input
-                    id="surname"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.surname"
-                    autofocus
-                    autocomplete="surname"
-                />
+                    <Input
+                        id="surname"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.surname"
+                        autofocus
+                        autocomplete="surname"
+                    />
 
-                <InputError class="mt-2" :message="form.errors.surname" />
+                    <InputError class="mt-2" :message="form.errors.surname" />
+                </div>
             </div>
             <div class="mt-4">
                 <Label>E-posta <span class="text-red-500">*</span></Label>
@@ -116,6 +136,176 @@ const showPasswordRePassword = ref(false);
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+            <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
+                <div class="mt-4">
+                    <FormField name="username">
+                        <FormItem>
+                            <FormLabel
+                                >Uzmanlık Alanı
+                                <span class="text-red-500">*</span></FormLabel
+                            >
+                            <FormControl>
+                                <Select v-model="form.specialization">
+                                    <SelectTrigger>
+                                        <SelectValue
+                                            placeholder="Uzmanlık Alanı Seç"
+                                        />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel
+                                                >Uzmanlık Alanı</SelectLabel
+                                            >
+                                            <SelectItem
+                                                value="Kadın Hastalıkları"
+                                            >
+                                                Kadın Hastalıkları
+                                            </SelectItem>
+                                            <SelectItem value="Dermatoloji">
+                                                Dermatoloji
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.specialization"
+                            />
+                        </FormItem>
+                    </FormField>
+                </div>
+
+                <div class="mt-4">
+                    <FormField name="username">
+                        <FormItem>
+                            <FormLabel
+                                >Deneyim Yılı
+                                <span class="text-red-500">*</span></FormLabel
+                            >
+                            <FormControl>
+                                <Select v-model="form.years_of_experience">
+                                    <SelectTrigger>
+                                        <SelectValue
+                                            placeholder="Deneyim Yılı Seç"
+                                        />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel
+                                                >Deneyim Yılı</SelectLabel
+                                            >
+                                            <SelectItem value="1">
+                                                1
+                                            </SelectItem>
+                                            <SelectItem value="2">
+                                                2
+                                            </SelectItem>
+                                            <SelectItem value="3">
+                                                3
+                                            </SelectItem>
+                                            <SelectItem value="4">
+                                                4
+                                            </SelectItem>
+                                            <SelectItem value="5">
+                                                5
+                                            </SelectItem>
+                                            <SelectItem value="+5">
+                                                +5
+                                            </SelectItem>
+                                            <SelectItem value="+10">
+                                                +10
+                                            </SelectItem>
+                                            <SelectItem value="+15">
+                                                +15
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.years_of_experience"
+                            />
+                        </FormItem>
+                    </FormField>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <Label
+                    >Çalıştığınız Hastane Adı veya Klinik Adı
+                    <span class="text-red-500">*</span></Label
+                >
+                <Input
+                    id="clinic_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.clinic_name"
+                    autofocus
+                    autocomplete="clinic_name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.clinic_name" />
+            </div>
+            <div class="mt-4">
+                <Label
+                    >Danışma Ücreti
+                    <span class="text-red-500">*</span></Label
+                >
+                <Input
+                    id="consultation_price"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="form.consultation_price"
+                    autofocus
+                    autocomplete="consultation_price"
+                />
+
+                <InputError class="mt-2" :message="form.errors.consultation_price" />
+            </div>
+            <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
+                <div class="mt-4">
+                    <Label>İl <span class="text-red-500">*</span></Label>
+                    <Input
+                        id="city"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.city"
+                        autofocus
+                        autocomplete="city"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.city" />
+                </div>
+
+                <div class="mt-4">
+                    <Label>İlçe <span class="text-red-500">*</span></Label>
+                    <Input
+                        id="district"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.district"
+                        autofocus
+                        autocomplete="district"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.district" />
+                </div>
+            </div>
+            <div class="mt-4">
+                <Label>Adres <span class="text-red-500">*</span></Label>
+                <Textarea
+                    id="address"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.address"
+                    autofocus
+                    autocomplete="address"
+                />
+
+                <InputError class="mt-2" :message="form.errors.address" />
             </div>
 
             <div class="mt-4">

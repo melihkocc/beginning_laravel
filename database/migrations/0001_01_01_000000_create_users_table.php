@@ -19,16 +19,18 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('plan')->default('free');
+            $table->string('plan')->default('paid');
             $table->string('status')->default('aktif');
             $table->string('description', 1000)->nullable(); // Description için uzunluğu arttırdık
-            $table->string('specialization')->nullable(); // Description için uzunluğu arttırdık
-            $table->string('years_of_experience')->nullable(); // Description için uzunluğu arttırdık
-            $table->string('clinic_name')->nullable(); // Description için uzunluğu arttırdık
-            $table->string('city')->nullable(); // Description için uzunluğu arttırdık
-            $table->string('district')->nullable(); // Description için uzunluğu arttırdık
-            $table->json('ratings')->nullable(); // Description için uzunluğu arttırdık
-            $table->float('consultation_price')->nullable(); // Description için uzunluğu arttırdık
+            $table->string('specialization')->nullable(); // 
+            $table->string('years_of_experience')->nullable(); // 
+            $table->string('clinic_name')->nullable(); // 
+            $table->string('city')->nullable(); // 
+            $table->string('district')->nullable(); // 
+            $table->string('address')->nullable(); // 
+
+            $table->json('ratings')->nullable(); // 
+            $table->float('consultation_price')->nullable(); // 
 
             $table->rememberToken();
             $table->timestamps();

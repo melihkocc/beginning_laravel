@@ -48,7 +48,7 @@ const showPasswordRePassword = ref(false);
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <Head title="Kayıt Ol" />
 
         <form @submit.prevent="submit">
             <div>
