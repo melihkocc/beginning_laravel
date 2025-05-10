@@ -23,6 +23,60 @@ class RegisteredUserController extends Controller
         return Inertia::render('Auth/Register');
     }
 
+    public function craeteRegisterDoctor(): Response
+    {
+        return Inertia::render('Auth/DoctorRegister');
+    }
+
+    public function storeRegisterDoctor(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'description' => 'required|string|max:1000',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => 'İsim alanı zorunludur.',
+            'name.string' => 'İsim metin olmalıdır.',
+            'name.max' => 'İsim en fazla 255 karakter olabilir.',
+
+            'surname.required' => 'Soyisim alanı zorunludur.',
+            'surname.string' => 'Soyisim metin olmalıdır.',
+            'surname.max' => 'Soyisim en fazla 255 karakter olabilir.',
+
+
+            'description.required' => 'Soyisim alanı zorunludur.',
+            'description.string' => 'Soyisim metin olmalıdır.',
+            'description.max' => 'Soyisim en fazla 1000 karakter olabilir.',
+
+            'email.required' => 'E-posta adresi zorunludur.',
+            'email.string' => 'E-posta metin olmalıdır.',
+            'email.lowercase' => 'E-posta küçük harf olmalıdır.',
+            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
+            'email.max' => 'E-posta en fazla 255 karakter olabilir.',
+            'email.unique' => 'Bu e-posta adresi zaten kullanılıyor.',
+
+            'password.required' => 'Şifre alanı zorunludur.',
+            'password.confirmed' => 'Şifreler eşleşmiyor.',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'description' => $request->description,
+            'plan' => 'doctor',
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(route('dashboard', absolute: false));
+    }
+
     /**
      * Handle an incoming registration request.
      *

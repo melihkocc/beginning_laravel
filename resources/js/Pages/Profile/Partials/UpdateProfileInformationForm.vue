@@ -1,12 +1,13 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import Button from '@/components/ui/button/Button.vue';
-import Input from '@/components/ui/input/Input.vue';
-import Label from '@/components/ui/label/Label.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import Button from "@/components/ui/button/Button.vue";
+import Input from "@/components/ui/input/Input.vue";
+import Label from "@/components/ui/label/Label.vue";
+import Textarea from "@/components/ui/textarea/Textarea.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps({
     mustVerifyEmail: {
@@ -18,20 +19,22 @@ defineProps({
 });
 
 const user = usePage().props.auth.user;
-
 const form = useForm({
     name: user.name,
     surname: user.surname,
     email: user.email,
+    description: user.description
 });
+
+const submit = () => {
+    form.patch(route('profile.update'))
+}
 </script>
 
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium">
-                Profil Bilgileri
-            </h2>
+            <h2 class="text-lg font-medium">Profil Bilgileri</h2>
 
             <p class="mt-1 text-sm">
                 Hesabınızın profil bilgilerini ve e-posta adresini güncelleyin.
@@ -39,7 +42,6 @@ const form = useForm({
         </header>
 
         <form
-            @submit.prevent="form.patch(route('profile.update'))"
             class="mt-6 space-y-6"
         >
             <div>
@@ -92,6 +94,23 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
+            <div v-if="user.plan === 'doctor'">
+                <Label for="description">Özgeçmiş (Açıklama)</Label>
+
+                <Textarea
+                    id="description"
+                    type="description"
+                    class="mt-1 block w-full"
+                    v-model="form.description"
+                    required
+                    autocomplete="description"
+                    placeholder="Özgeçmiş (Açıklama)"
+                    rows="10"
+                />
+
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="mt-2 text-sm text-gray-800">
                     Your email address is unverified.
@@ -114,21 +133,9 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-                <Button variant="action" :disabled="form.processing">Kaydet</Button>
-
-                <Transition
-                    enter-active-class="transition ease-in-out"
-                    enter-from-class="opacity-0"
-                    leave-active-class="transition ease-in-out"
-                    leave-to-class="opacity-0"
+                <Button @click="submit" variant="action" :disabled="form.processing"
+                    >Kaydet</Button
                 >
-                    <p
-                        v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
-                    >
-                        Kaydedildi.
-                    </p>
-                </Transition>
             </div>
         </form>
     </section>

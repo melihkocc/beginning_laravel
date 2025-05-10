@@ -10,29 +10,32 @@ import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
+import Title from "@/Components/Title.vue";
+import Textarea from "@/components/ui/textarea/Textarea.vue";
 
 const form = useForm({
     name: "",
     surname: "",
     email: "",
+    description: "",
     password: "",
     password_confirmation: "",
 });
 
 const submit = () => {
-    form.post(route("register"), {
+    form.post(route("doctor-register"), {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 const showPassword = ref(false);
 const showPasswordRePassword = ref(false);
-
 </script>
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
-
+        <div class="mb-3 text-center">
+            <Title text="Doktor Olarak Kaydol" />
+        </div>
         <form @submit.prevent="submit">
             <div>
                 <Label>İsim <span class="text-red-500">*</span></Label>
@@ -41,7 +44,7 @@ const showPasswordRePassword = ref(false);
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
-                    required
+                    
                     autofocus
                     autocomplete="name"
                 />
@@ -56,7 +59,7 @@ const showPasswordRePassword = ref(false);
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.surname"
-                    required
+                    
                     autofocus
                     autocomplete="surname"
                 />
@@ -71,11 +74,26 @@ const showPasswordRePassword = ref(false);
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
-                    required
+                    
                     autocomplete="username"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <Label>Özgeçmiş (Açıklama) <span class="text-red-500">*</span></Label>
+
+                <Textarea
+                    id="description"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.description"
+                    maxlength="1000"
+                    autocomplete="description"
+                />
+
+                <InputError class="mt-2" :message="form.errors.description" />
             </div>
 
             <div class="mt-4">
@@ -87,7 +105,7 @@ const showPasswordRePassword = ref(false);
                         :type="showPassword ? 'text' : 'password'"
                         class="mt-1 block w-full"
                         v-model="form.password"
-                        required
+                        
                         autocomplete="new-password"
                     />
                     <span
@@ -121,7 +139,7 @@ const showPasswordRePassword = ref(false);
                         :type="showPasswordRePassword ? 'text' : 'password'"
                         class="mt-1 block w-full"
                         v-model="form.password_confirmation"
-                        required
+                        
                         autocomplete="new-password"
                     />
 
@@ -130,7 +148,9 @@ const showPasswordRePassword = ref(false);
                     >
                         <button
                             type="button"
-                            @click="showPasswordRePassword = !showPasswordRePassword"
+                            @click="
+                                showPasswordRePassword = !showPasswordRePassword
+                            "
                             :aria-label="
                                 showPasswordRePassword
                                     ? 'Parolayı gizle'

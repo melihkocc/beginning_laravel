@@ -99,9 +99,7 @@ import { usePage } from "@inertiajs/vue3";
 import { storeToRefs } from "pinia";
 
 const page = usePage();
-console.log(page.props);
 const { can, hasGroupPermission } = usePermissions();
-console.log(can(page.props.auth.user.plan));
 const { toast } = useToast();
 
 const props = defineProps({
@@ -159,17 +157,11 @@ const data = {
             items: [
                 {
                     type: "single",
-                    title: "Fırsatlar",
+                    title: "Doktor",
                     url: route("dashboard"),
                     icon: BriefcaseBusiness,
                     isActive: page.url === "/dashboard",
-                    hasPermission: can(page.props.auth.user.plan),
-                },
-                {
-                    type: "single",
-                    title: "Projeler",
-                    url: "#",
-                    icon: Building,
+                    hasPermission: page.props.auth.user.plan === 'doctor',
                 },
                 {
                     type: "single",

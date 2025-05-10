@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('plan')->default('basic');
+            $table->string('plan')->default('free');
+            $table->string('description', 1000)->nullable(); // Description için uzunluğu arttırdık
             $table->rememberToken();
             $table->timestamps();
         });

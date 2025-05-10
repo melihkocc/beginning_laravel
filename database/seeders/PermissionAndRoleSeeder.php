@@ -13,19 +13,19 @@ class PermissionAndRoleSeeder extends Seeder
         // Create permissions for Basic, Medium, Large
         $permissionList = [
             [
-                'group_name' => 'Basic',
-                'name' => 'basic',
-                'description' => 'Basic Permission',
+                'group_name' => 'free',
+                'name' => 'free',
+                'description' => 'Free Permission',
             ],
             [
-                'group_name' => 'Medium',
-                'name' => 'medium',
-                'description' => 'Medium Permission',
+                'group_name' => 'paid',
+                'name' => 'paid',
+                'description' => 'Paid Permission',
             ],
             [
-                'group_name' => 'Large',
-                'name' => 'large',
-                'description' => 'Large Permission',
+                'group_name' => 'doctor',
+                'name' => 'doctor',
+                'description' => 'Doktor Permission',
             ],
             [
                 'group_name' => 'Admin',
@@ -55,12 +55,12 @@ class PermissionAndRoleSeeder extends Seeder
                 $user->save();
                 return;
             }
-            if ($user->plan == 'basic') {
-                $user->syncPermissions('basic');
-            } elseif ($user->plan == 'medium') {
-                $user->syncPermissions('medium');
-            } elseif ($user->plan == 'large') {
-                $user->syncPermissions('large');
+            if ($user->plan == 'free') {
+                $user->syncPermissions('free');
+            } elseif ($user->plan == 'paid') {
+                $user->syncPermissions('paid');
+            } elseif ($user->plan == 'doctor') {
+                $user->syncPermissions('doctor');
             }
         }
     }

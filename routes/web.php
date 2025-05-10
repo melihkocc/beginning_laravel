@@ -26,8 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::middleware('auth')->prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('users.index');
+    Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
 });
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
