@@ -49,4 +49,12 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+    public function verifyStatusView(Request $request)
+    {
+        if (Auth::user()->status == 'aktif') {
+            return redirect()->route('dashboard')->with('success', 'Hesap onaylandı.');
+        }
+
+        return Inertia::render('Auth/VerifyStatus');
+    }
 }

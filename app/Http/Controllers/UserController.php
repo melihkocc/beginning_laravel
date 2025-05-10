@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::select('id', 'name', 'surname', 'email', 'plan')->get();
+        $users = User::select('id', 'name', 'surname', 'email', 'plan','status')->get();
         return Inertia::render('User/List', [
             'users' => $users
         ]);
@@ -85,5 +85,18 @@ class UserController extends Controller
 
         // Optionally, return a response or redirect
         return redirect()->route('users.index')->with('success', 'Kullanıcı Başarıyla Silindi.');
+    }
+
+    public function activate($id)
+    {
+        // Find the user by id
+        $user = User::findOrFail($id);
+
+        // Delete the user
+        $user->status = 'aktif';
+        $user->save();
+
+        // Optionally, return a response or redirect
+        return redirect()->route('users.index')->with('success', 'Kullanıcı Başarıyla Aktif Edildi.');
     }
 }

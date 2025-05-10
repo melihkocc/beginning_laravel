@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,25 +28,39 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
+        // Eğer e-posta adresi değiştirilmediyse, unique kuralını geçici olarak devre dışı bırak
+        $emailRule = 'required|string|lowercase|email|max:255';
+        if ($request->email !== $request->user()->email) {
+            // Eğer e-posta adresi değiştiyse, 'unique' doğrulamasını ekleyin
+            $emailRule .= '|unique:' . User::class;
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'min:3', "regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/u"],
             'surname' => ['required', 'string', 'max:255', 'min:2', "regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/u"],
+            'email' => $emailRule,
+            'description' => 'nullable|string|max:1000',
         ], [
             'name.required' => 'Ad zorunludur.',
             'name.regex' => 'Ad yalnızca harf içerebilir.',
         ]);
 
+        // Kullanıcıyı güncelle
         $request->user()->fill($validated);
+
+        // E-posta değişmişse, email doğrulama bilgisini sıfırla
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();   
+        $request->user()->save();
 
+        // Profil güncelleme başarı mesajı
         return redirect()->route('profile.edit')->with('success', 'Profil başarıyla güncellendi.');
     }
+
 
     /**
      * Delete the user's account.

@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Head, usePage, useForm, Link } from "@inertiajs/vue3";
 import Button from "@/components/ui/button/Button.vue";
-import { Edit, Trash } from "lucide-vue-next";
+import { Check, Edit, Trash } from "lucide-vue-next";
 import Textarea from "@/components/ui/textarea/Textarea.vue";
 const dayjs = inject("dayjs");
 
@@ -57,6 +57,10 @@ onMounted(() => {
         plan.value = "-";
     }
 });
+
+const activeUser = () => {
+    form.patch(route("users.activate", props.user.id));
+};
 </script>
 
 <template>
@@ -70,12 +74,31 @@ onMounted(() => {
                         Oluşturulma Tarihi :
                         {{ $dayjs(props.user.created_at).format("DD/MM/YYYY") }}
                     </div>
+                    <div class="mt-1 text-sm text-gray-500">
+                        Rol :
+                        {{ plan }}
+                    </div>
+                    <div class="mt-1 text-sm text-gray-500">
+                        Statü :
+                        {{ props.user.status == "aktif" ? "Aktif" : "Pasif" }}
+                    </div>
+                    <div v-if="props.user.plan !== 'doctor'" class="mt-1 text-sm text-gray-500">
+                        Cinsiyet :
+                        {{ props.user.gender == "erkek" ? "Erkek" : "Kadın" }}
+                    </div>
                 </div>
                 <div
                     class="flex lg:justify-end md:justify-end justify-start items-center gap-5"
                 >
                     <Link :href="route('users.edit', props.user.id)"
                         ><Button processbutton> <Edit /> Düzenle</Button></Link
+                    >
+                    <Button
+                        v-if="props.user.status === 'pasif'"
+                        @click="activeUser"
+                        processbutton
+                    >
+                        <Check /> Aktif Et</Button
                     >
                     <Button @click="deleteUser" variant="destructive">
                         <Trash /> Sil</Button

@@ -10,8 +10,26 @@ import Input from "@/components/ui/input/Input.vue";
 import Button from "@/components/ui/button/Button.vue";
 import { Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
-
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 const form = useForm({
+    gender: '',
     name: "",
     surname: "",
     email: "",
@@ -26,7 +44,6 @@ const submit = () => {
 };
 const showPassword = ref(false);
 const showPasswordRePassword = ref(false);
-
 </script>
 
 <template>
@@ -35,6 +52,34 @@ const showPasswordRePassword = ref(false);
 
         <form @submit.prevent="submit">
             <div>
+                <FormField name="username">
+                    <FormItem>
+                        <FormLabel
+                            >Cinsiyet <span class="text-red-500">*</span></FormLabel
+                        >
+                        <FormControl>
+                            <Select v-model="form.gender">
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Cinsiyet Seç" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Fruits</SelectLabel>
+                                        <SelectItem value="kadin">
+                                            Kadın
+                                        </SelectItem>
+                                        <SelectItem value="erkek">
+                                            Erkek
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </FormControl>
+                        <InputError class="mt-2" :message="form.errors.gender" />
+                    </FormItem>
+                </FormField>
+            </div>
+            <div class="mt-4">
                 <Label>İsim <span class="text-red-500">*</span></Label>
                 <Input
                     id="name"
@@ -130,7 +175,9 @@ const showPasswordRePassword = ref(false);
                     >
                         <button
                             type="button"
-                            @click="showPasswordRePassword = !showPasswordRePassword"
+                            @click="
+                                showPasswordRePassword = !showPasswordRePassword
+                            "
                             :aria-label="
                                 showPasswordRePassword
                                     ? 'Parolayı gizle'

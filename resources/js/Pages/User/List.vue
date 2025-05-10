@@ -38,18 +38,18 @@ onMounted(() => {
 });
 
 const userPlan = (plan) => {
-  switch (plan) {
-    case 'free':
-      return 'Ücretsiz Sürüm';
-    case 'paid':
-      return 'Ücretli Sürüm';
-    case 'doctor':
-      return 'Doktor';
-    case 'admin':
-      return 'Admin';
-    default:
-      return '-';
-  }
+    switch (plan) {
+        case "free":
+            return "Ücretsiz Sürüm";
+        case "paid":
+            return "Ücretli Sürüm";
+        case "doctor":
+            return "Doktor";
+        case "admin":
+            return "Admin";
+        default:
+            return "-";
+    }
 };
 
 // Kullanıcıları arama query'sine göre filtreleme
@@ -95,6 +95,7 @@ const handleClickProcess = (id) => {
                         <TableHead>Ad Soyad</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Plan</TableHead>
+                        <TableHead>Statü</TableHead>
                         <TableHead>Oluşturulma Tarihi</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -134,6 +135,8 @@ const handleClickProcess = (id) => {
                         >
                         <TableCell>{{ user.email }}</TableCell>
                         <TableCell>{{ userPlan(user.plan) }}</TableCell>
+                        <TableCell>{{ user.status === 'aktif' ? 'Aktif' : 'Pasif' }}</TableCell>
+
                         <TableCell>{{
                             $dayjs(user.created_at).format("DD/MM/YYYY")
                         }}</TableCell>

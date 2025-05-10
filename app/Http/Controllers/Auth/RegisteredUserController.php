@@ -67,6 +67,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'description' => $request->description,
             'plan' => 'doctor',
+            'status' => 'pasif',
             'password' => Hash::make($request->password),
         ]);
 
@@ -85,11 +86,17 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
+            'gender' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
+
+            'gender.required' => 'Cinsiyet alanı zorunludur.',
+            'gender.string' => 'Cinsiyet metin olmalıdır.',
+            'gender.max' => 'Cinsiyet en fazla 255 karakter olabilir.',
+
             'name.required' => 'İsim alanı zorunludur.',
             'name.string' => 'İsim metin olmalıdır.',
             'name.max' => 'İsim en fazla 255 karakter olabilir.',
@@ -110,6 +117,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
+            'gender' => $request->gender,
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,

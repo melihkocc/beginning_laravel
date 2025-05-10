@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         $userCredentials = [
             [
+                'gender' => 'erkek',
                 'name' => 'Melih',
                 'surname' => 'Koç',
                 'email' => 'kocmelih20@gmail.com'
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
 
         foreach ($userCredentials as $userCredential) {
             $user = new User();
+            $user->gender = $userCredential['gender'];
             $user->name = $userCredential['name'];
             $user->surname = $userCredential['surname'];
             $user->email = $userCredential['email'];
