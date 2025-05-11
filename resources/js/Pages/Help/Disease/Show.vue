@@ -28,6 +28,7 @@ import {
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { useDarkModeStore } from "@/stores/dark-mode";
+import dayjs from "dayjs";
 
 const breadcrumbs = ref([
     {
@@ -175,6 +176,13 @@ const meet = () => {
                                 </SheetHeader>
                             </SheetContent>
                         </Sheet>
+                    </div>
+                    <div v-else-if="props.help.meeting_status == 'Onaylandı'">
+                        <div
+                            class="flex lg:justify-end md:justify-end justify-start items-center text-sm font-semibold"
+                        >
+                            Randevu Alındı {{ dayjs(props.help.meeting_date).format("DD/MM/YYYY HH:mm") }}
+                        </div>
                     </div>
                     <div
                         class="flex lg:justify-end md:justify-end justify-start items-center text-sm font-semibold"

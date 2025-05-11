@@ -135,13 +135,23 @@ const submitMeet = () => {
                                             }}
                                         </div>
                                     </div>
-                                    <Button
-                                        @click="submitMeet"
-                                        class="mt-3"
-                                        processbutton
+                                    <div
+                                        class="flex items-center justify-between"
                                     >
-                                        <Check /> Onayla</Button
-                                    >
+                                        <Button
+                                            @click="submitMeet"
+                                            class="mt-3"
+                                            processbutton
+                                        >
+                                            <Check /> Onayla</Button
+                                        >
+                                        <Button
+                                            class="mt-3"
+                                            variant="destructive"
+                                        >
+                                            <Check /> Reddet</Button
+                                        >
+                                    </div>
                                 </SheetHeader>
                             </SheetContent>
                         </Sheet>

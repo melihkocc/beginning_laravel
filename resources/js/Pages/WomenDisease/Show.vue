@@ -115,12 +115,12 @@ const formatAnswer = (value) => {
                         <SheetTrigger>
                             <Button class="ms-3" processbutton>
                                 <Brain class="w-4 h-4" />
-                                Sohbet
+                                AI Sohbet
                             </Button>
                         </SheetTrigger>
                         <SheetContent class="flex flex-col h-full">
                             <SheetHeader>
-                                <SheetTitle>Sohbet</SheetTitle>
+                                <SheetTitle>AI Sohbet</SheetTitle>
                                 <SheetDescription>
                                     Kadın hastalıkları hakkında sorularınızı
                                     sorabilirsiniz.
