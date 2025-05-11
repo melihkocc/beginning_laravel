@@ -104,6 +104,7 @@ const showPassword = ref(false);
 
             <div class="mt-4 flex items-center justify-end">
                 <Button
+                    processbutton
                     class="w-full"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
@@ -115,12 +116,12 @@ const showPassword = ref(false);
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded-md text-sm text-[#9B51E0] underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     Şifreni mi unuttun?
                 </Link>
                 <Link :href="route('register')">
-                    <Button class="w-full mt-5"> Kayıt Ol </Button>
+                    <Button processbutton class="w-full mt-5"> Kayıt Ol </Button>
                 </Link>
             </div>
         </form>

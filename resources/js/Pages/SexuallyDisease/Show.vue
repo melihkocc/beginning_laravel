@@ -3,8 +3,10 @@ import Title from "@/Components/Title.vue";
 import Button from "@/components/ui/button/Button.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
-import { Hospital } from "lucide-vue-next";
+import { AlertCircle, Hospital } from "lucide-vue-next";
 import { computed, ref } from "vue";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
 const breadcrumbs = ref([
     {
         title: "Cinsel Hastalık Kayıtlarınız",
@@ -48,6 +50,7 @@ const formatAnswer = (value) => {
                     <Title text="Cinsel Hastalık Kaydı Görüntüle" />
                 </div>
                 <div
+                    v-if="props.auth.user.plan != 'doctor'"
                     class="flex lg:justify-end md:justify-end justify-start items-center"
                 >
                     <Link :href="route('find-doctor.index')">
@@ -58,6 +61,16 @@ const formatAnswer = (value) => {
                 </div>
             </div>
 
+            <Alert variant="destructive">
+                <AlertCircle class="h-4 w-4" />
+                <AlertTitle>Dikkat</AlertTitle>
+                <AlertDescription>
+                    Bu analiz, yapay zeka tarafından bilgilendirme amacıyla
+                    oluşturulmuştur. Tıbbi tavsiye, teşhis veya tedavi yerine
+                    geçmez. Herhangi bir sağlık sorununuzda lütfen doktorunuza
+                    veya yetkili bir sağlık uzmanına danışın.
+                </AlertDescription>
+            </Alert>
             <!-- Sonuç Kartı -->
             <div
                 class="bg-white shadow-xl rounded-2xl p-6 border border-gray-200"

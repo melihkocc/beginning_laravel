@@ -4,7 +4,7 @@ import Button from "@/components/ui/button/Button.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, usePage } from "@inertiajs/vue3";
 import { SaveIcon } from "lucide-vue-next";
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import {
     Table,
     TableBody,
@@ -31,6 +31,15 @@ const helps = ref([]);
 onMounted(() => {
     helps.value = props.helps;
 });
+
+
+const selectedData = reactive({
+    id: null,
+});
+
+const handleClickProcess = (id) => {
+    selectedData.id = id;
+};
 </script>
 
 <template>
@@ -48,7 +57,7 @@ onMounted(() => {
                     >
                 </div>
             </div>
-            <Table>
+            <Table class="border mt-5">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Detay</TableHead>

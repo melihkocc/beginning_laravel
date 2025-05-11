@@ -53,7 +53,8 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("women-disease.store"));
+    form.age = String(form.age);
+    form.post(route("sexually-disease.store"));
 };
 </script>
 

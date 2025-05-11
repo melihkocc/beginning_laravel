@@ -27,7 +27,7 @@ import {
     FormLabel,
 } from "@/components/ui/form";
 import Textarea from "@/components/ui/textarea/Textarea.vue";
-import { Send } from "lucide-vue-next";
+import { Coins, Currency, CurrencyIcon, Send } from "lucide-vue-next";
 import InputError from "@/Components/InputError.vue";
 const { props } = usePage();
 const breadcrumbs = ref([{ title: "Doktorlar" }]);
@@ -63,7 +63,7 @@ const submit = () => {
     <Head title="Uzman Yardım Al" />
     <AuthenticatedLayout :breadcrumbs="breadcrumbs">
         <div class="doctor-list">
-            <Title text="Aktif Doktorlar" class="text-center mb-8" />
+            <Title text="Aktif Doktorlar" class="text-start mb-8 ms-7" />
 
             <div
                 class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6"
@@ -163,7 +163,7 @@ const submit = () => {
                         </FormItem>
                     </FormField>
                 </Form>
-                <Button @click="submit" class="mt-5 w-full" processbutton> <Send /> Gönder</Button>
+                <Button @click="submit" class="mt-5 w-full" processbutton> <Coins /> Satın Al</Button>
             </div>
         </DialogContent>
     </Dialog>

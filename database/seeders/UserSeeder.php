@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Expr\New_;
 
 class UserSeeder extends Seeder
 {
@@ -32,5 +33,31 @@ class UserSeeder extends Seeder
             $user->password = Hash::make('Melih123');
             $user->save();
         }
+
+        $user = new User();
+        $user->gender = 'kadin';
+        $user->name = 'Ayşe';
+        $user->surname = 'ayşe';
+        $user->email = 'ayse@gmail.com';
+        $user->plan = 'paid';
+        $user->password = Hash::make('Melih123');
+        $user->save();
+
+        $user = new User();
+        $user->gender = 'erkek';
+        $user->name = 'Alperen';
+        $user->surname = 'Kürk';
+        $user->email = 'alperen@gmail.com';
+        $user->plan = 'doctor';
+        $user->description = 'Özgeçmiş';
+        $user->specialization = 'Kadın Hastalıkları';
+        $user->years_of_experience = '4';
+        $user->clinic_name = 'Ufuk Hastanesi';
+        $user->city = 'Ankara';
+        $user->district = 'Mamak';
+        $user->address = 'Kutlu Mahallesi';
+        $user->consultation_price = 500;
+        $user->password = Hash::make('Melih123');
+        $user->save();
     }
 }

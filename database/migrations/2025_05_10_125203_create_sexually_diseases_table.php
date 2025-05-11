@@ -27,8 +27,8 @@ return new class extends Migration
             $table->boolean('plaque_rash'); /// Nemli bölgelerinizde plak döküntü var mı?
             $table->boolean('vezikul'); /// Ağrı hassasiyet ve genital bölgenizde içi sıvı dolu kabarcıklar (vezikül) var mı
             $table->boolean('need_to_urinate'); /// İdrar yapma ihtiyacı hissedip idrarınız yapamadığınız oluyor mu
-            $table->string('result');   // koku
-            $table->json('description');   // koku
+            $table->string('result')->nullable();   // koku
+            $table->json('description')->nullable();   // koku
 
             $table->timestamps();
         });

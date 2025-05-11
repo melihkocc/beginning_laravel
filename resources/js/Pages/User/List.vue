@@ -88,7 +88,7 @@ const handleClickProcess = (id) => {
                     class="border p-2 rounded w-full"
                 />
             </div>
-            <Table>
+            <Table class="border mt-5">
                 <TableHeader>
                     <TableRow>
                         <TableHead>Detay</TableHead>

@@ -55,6 +55,9 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
+    BriefcaseMedical,
+    Activity,
+    HelpCircle,
     BadgeCheck,
     Bell,
     BriefcaseBusiness,
@@ -91,12 +94,15 @@ import {
     UserCircle,
     UserCircle2,
     UserCog2Icon,
+    Users,
+    HomeIcon,
 } from "lucide-vue-next";
 
 import { useToast } from "@/components/ui/toast/use-toast";
 import { useDarkModeStore } from "@/stores/dark-mode";
 import { usePage } from "@inertiajs/vue3";
 import { storeToRefs } from "pinia";
+import ApplicationLogo from "./ApplicationLogo.vue";
 
 const page = usePage();
 const { can, hasGroupPermission } = usePermissions();
@@ -122,113 +128,60 @@ const data = {
             checkPermission: false,
             title: "Anasayfa",
             url: route("dashboard"),
-            icon: Grid2x2,
+            icon: HomeIcon,
             isActive: page.url === "/dashboard",
         },
         {
             type: "group",
-            checkPermission: false,
-            title: "Bana Özel",
-            items: [
-                {
-                    type: "single",
-                    title: "Takvim",
-                    url: "#",
-                    icon: Calendar1Icon,
-                },
-                {
-                    type: "single",
-                    title: "Mesajlar",
-                    url: "#",
-                    icon: MessageCircle,
-                },
-                {
-                    type: "single",
-                    title: "Bildirimler",
-                    url: "#",
-                    icon: Bell,
-                },
-            ],
-        },
-        {
-            type: "group",
             checkPermission: true,
-            title: "CRM",
+            title: "Hasta",
             items: [
-                {
-                    type: "single",
-                    title: "Doktor",
-                    url: route("dashboard"),
-                    icon: BriefcaseBusiness,
-                    isActive: page.url === "/dashboard",
-                    hasPermission: page.props.auth.user.plan === "doctor",
-                },
-
                 {
                     type: "single",
                     title: "Cinsel Yolla Bulaşan Hastalıklar",
                     url: route("sexually-disease.index"),
-                    icon: BriefcaseBusiness,
+                    icon: Activity,
                     isActive: page.url === "/sexually-disease",
-                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                    hasPermission:
+                        page.props.auth.user.plan === "paid" &&
+                        page.props.auth.user.gender == "kadin",
                 },
 
                 {
                     type: "single",
                     title: "Kadın Hastalıkları",
                     url: route("women-disease.index"),
-                    icon: BriefcaseBusiness,
+                    icon: Activity,
                     isActive: page.url === "/women-disease",
-                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                    hasPermission:
+                        page.props.auth.user.plan === "paid" &&
+                        page.props.auth.user.gender == "kadin",
                 },
-
 
                 {
                     type: "single",
                     title: "Yardım Taleplerim",
                     url: route("help-disease.index"),
-                    icon: BriefcaseBusiness,
+                    icon: HelpCircle,
                     isActive: page.url === "/help/disease",
-                    hasPermission: (page.props.auth.user.plan === "paid" && page.props.auth.user.gender == 'kadin'),
+                    hasPermission:
+                        page.props.auth.user.plan === "paid" &&
+                        page.props.auth.user.gender == "kadin",
                 },
-
+            ],
+        },
+        {
+            type: "group",
+            checkPermission: true,
+            title: "Doktor",
+            items: [
                 {
                     type: "single",
-                    title: "Talepler",
-                    url: route("dashboard"),
-                    icon: SquarePen,
-                    isActive: page.url === "/demands",
-                    hasPermission: can(page.props.auth.user.plan),
-                },
-                {
-                    type: "single",
-                    title: "Teklifler",
-                    url: route("dashboard"),
-                    icon: FileUp,
-                    isActive: page.url === "/proposals",
-                    hasPermission: can(page.props.auth.user.plan),
-                },
-                {
-                    type: "single",
-                    title: "Siparişler",
-                    url: route("dashboard"),
-                    icon: ShoppingCart,
-                    isActive: page.url === "/orders",
-                    hasPermission: can(page.props.auth.user.plan),
-                },
-                {
-                    type: "single",
-                    title: "Sevkiyatlar",
-                    url: "#",
-                    icon: Truck,
-                },
-                {
-                    type: "single",
-                    title: "Onaylamalar",
-                    url: route("dashboard"),
-                    icon: CheckCircle,
-                    isActive: page.url === "/approvals",
-                    hasPermission: can(page.props.auth.user.plan),
+                    title: "Hasta Talepleri",
+                    url: route("help-doctor.index"),
+                    icon: BriefcaseMedical,
+                    isActive: page.url === "/help/doctor",
+                    hasPermission: page.props.auth.user.plan === "doctor",
                 },
             ],
         },
@@ -241,7 +194,7 @@ const data = {
                     type: "single",
                     title: "Kullanıcılar",
                     url: route("users.index"),
-                    icon: BriefcaseBusiness,
+                    icon: Users,
                     isActive: page.url === "/users",
                     hasPermission: can(page.props.auth.user.plan),
                 },
@@ -282,7 +235,14 @@ function logout() {
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <div class="p-2">Başlık</div>
+                        <div class="flex justify-start items-center border-b pb-3">
+                            <img
+                                src="/doktorYanimda.png"
+                                alt="Kadın Sağlığı Logosu"
+                                class="mt-5 border rounded-full h-14 w-14"
+                            />
+                            <div class="font-bold mt-6 ms-3">DoktorYanımda</div>
+                        </div>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>

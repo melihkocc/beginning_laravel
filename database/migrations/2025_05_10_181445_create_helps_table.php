@@ -16,6 +16,10 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade'); // paid user
             $table->foreignId('doctor_id')->constrained('users')->onDelete('cascade');  // doctor user
             $table->string('complaint_description');
+            $table->json('patient_messages')->nullable(); // Nullable yaptık
+            $table->json('doctor_messages')->nullable(); // Nullable yaptık
+            $table->boolean('status')->default(false);
+            $table->string('doctor_description',1000)->nullable();
             $table->timestamps();
         });
     }

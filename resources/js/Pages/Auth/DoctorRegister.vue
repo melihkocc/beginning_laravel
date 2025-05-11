@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/form";
 import Textarea from "@/components/ui/textarea/Textarea.vue";
 const form = useForm({
+    gender: '',
     name: "",
     surname: "",
     email: "",
@@ -400,6 +401,7 @@ const showPasswordRePassword = ref(false);
 
             <div class="mt-4 flex flex-col items-center justify-center">
                 <Button
+                    processbutton
                     class="w-full mb-5"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
@@ -408,7 +410,7 @@ const showPasswordRePassword = ref(false);
                 </Button>
                 <Link
                     :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    class="rounded-md text-sm text-[#9B51E0] underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     Zaten kayıtlı mısın?
                 </Link>

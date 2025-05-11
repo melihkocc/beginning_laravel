@@ -187,6 +187,8 @@ class SexuallyDiseaseController extends Controller
             'need_to_urinate.required' => 'İdrar yapma durumu zorunludur.',
             'need_to_urinate.boolean' => 'İdrar yapamama durumu doğru bir şekilde belirtilmelidir.',
         ]);
+
+        
         $result = $this->determineResult($validated);
 
         try {

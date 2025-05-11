@@ -56,8 +56,8 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('women-disease')->
 Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('help')->group(function () {
 
     //ortak
-
-
+    Route::get('/{help}/message', [HelpController::class, 'showMessage'])->name('help-message.show');
+    Route::post('/{help}/send-message', [HelpController::class, 'sendMessage'])->name('help-message.send');
 
     /// disease
     Route::get('/disease', [HelpController::class, 'diseaseIndex'])->name('help-disease.index');
@@ -67,6 +67,8 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('help')->group(fun
 
     ///doctor
     Route::get('/doctor', [HelpController::class, 'doctorIndex'])->name('help-doctor.index');
+    Route::get('/{help}/show-doctor', [HelpController::class, 'showHelpDoctor'])->name('help-show-doctor');
+    Route::post('/{help}/doctor-activate', [HelpController::class, 'activateHelp'])->name('help-activate-doctor');
 });
 
 require __DIR__ . '/auth.php';
