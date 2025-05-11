@@ -32,7 +32,6 @@ onMounted(() => {
     helps.value = props.helps;
 });
 
-
 const selectedData = reactive({
     id: null,
 });
@@ -83,7 +82,10 @@ const handleClickProcess = (id) => {
                                     <DropdownMenuItem
                                         :as="Link"
                                         :href="
-                                            route('help-show-disease.index', data.id)
+                                            route(
+                                                'help-show-disease.index',
+                                                data.id
+                                            )
                                         "
                                         class="cursor-pointer"
                                     >
@@ -92,8 +94,12 @@ const handleClickProcess = (id) => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </TableCell>
+
                         <TableCell>{{ data.id }}</TableCell>
-                        <TableCell>{{ data.doctor.name }} {{ data.doctor.surname }}</TableCell>
+                        <TableCell
+                            >{{ data.doctor.name }}
+                            {{ data.doctor.surname }}</TableCell
+                        >
                         <TableCell>{{
                             $dayjs(data.created_at).format("DD/MM/YYYY")
                         }}</TableCell>

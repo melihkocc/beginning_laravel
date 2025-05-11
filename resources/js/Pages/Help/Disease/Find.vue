@@ -29,6 +29,7 @@ import {
 import Textarea from "@/components/ui/textarea/Textarea.vue";
 import { Coins, Currency, CurrencyIcon, Send } from "lucide-vue-next";
 import InputError from "@/Components/InputError.vue";
+import StarRating from "@/Components/StarRating.vue";
 const { props } = usePage();
 const breadcrumbs = ref([{ title: "Doktorlar" }]);
 const doctors = ref([]);
@@ -55,7 +56,7 @@ const form = useForm({
 
 const submit = () => {
     form.doctor_id = selectedDoctor.value.id;
-    form.post(route('help.store'));
+    form.post(route("help.store"));
 };
 </script>
 
@@ -75,41 +76,36 @@ const submit = () => {
                 >
                     <Card>
                         <CardHeader>
-                            <h3
-                                class="text-2xl font-semibold text-center text-gray-800 mb-2"
-                            >
+                            <h3 class="text-2xl font-semibold text-center mb-2">
                                 {{ doctor.name }} {{ doctor.surname }}
                             </h3>
-                            <p class="text-center text-gray-500 text-sm">
+                            <p class="text-center text-sm">
                                 {{ doctor.specialization }}
                             </p>
+                            <div class="flex justify-center mt-2">
+                                <StarRating :rating="doctor.ratings" />
+                            </div>
                         </CardHeader>
 
                         <CardContent>
                             <div class="space-y-2">
-                                <p class="text-gray-700">
+                                <p class="">
                                     <strong>E-posta:</strong> {{ doctor.email }}
                                 </p>
-                                <p class="text-gray-700">
+                                <p class="">
                                     <strong>İl:</strong> {{ doctor.city }}
                                 </p>
-                                <p class="text-gray-700">
+                                <p class="">
                                     <strong>İlçe:</strong> {{ doctor.district }}
                                 </p>
-                                <p class="text-gray-700">
+                                <p class="">
                                     <strong>Adres:</strong> {{ doctor.address }}
                                 </p>
-                                <p
-                                    v-if="doctor.consultation_price"
-                                    class="text-gray-700"
-                                >
+                                <p v-if="doctor.consultation_price" class="">
                                     <strong>Danışmanlık Ücreti:</strong>
                                     {{ doctor.consultation_price }} TL
                                 </p>
-                                <p
-                                    v-if="doctor.years_of_experience"
-                                    class="text-gray-700"
-                                >
+                                <p v-if="doctor.years_of_experience" class="">
                                     <strong>Deneyim:</strong>
                                     {{ doctor.years_of_experience }} yıl
                                 </p>
@@ -150,7 +146,7 @@ const submit = () => {
                                 <span class="text-red-500">*</span></FormLabel
                             >
                             <FormControl>
-                                <Textarea 
+                                <Textarea
                                     v-model="form.complaint_description"
                                     maxlength="500"
                                     rows="9"
@@ -163,7 +159,9 @@ const submit = () => {
                         </FormItem>
                     </FormField>
                 </Form>
-                <Button @click="submit" class="mt-5 w-full" processbutton> <Coins /> Satın Al</Button>
+                <Button @click="submit" class="mt-5 w-full" processbutton>
+                    <Coins /> Satın Al</Button
+                >
             </div>
         </DialogContent>
     </Dialog>

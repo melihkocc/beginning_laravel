@@ -19,7 +19,10 @@ return new class extends Migration
             $table->json('patient_messages')->nullable(); // Nullable yaptık
             $table->json('doctor_messages')->nullable(); // Nullable yaptık
             $table->boolean('status')->default(false);
-            $table->string('doctor_description',1000)->nullable();
+            $table->string('doctor_description', 1000)->nullable();
+            $table->timestamp('meeting_date')->nullable()->index();
+            $table->string('meeting_status')->nullable();
+
             $table->timestamps();
         });
     }

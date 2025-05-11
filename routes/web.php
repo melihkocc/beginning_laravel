@@ -64,11 +64,13 @@ Route::middleware([CheckVerifyStatus::class, 'auth'])->prefix('help')->group(fun
     Route::get('/find-doctor', [HelpController::class, 'findDoctor'])->name('find-doctor.index');
     Route::post('/', [HelpController::class, 'storeHelp'])->name('help.store');
     Route::get('/{help}/show-disease', [HelpController::class, 'showHelpDisease'])->name('help-show-disease.index');
+    Route::post('/{help}/meet-store', [HelpController::class, 'meetStore'])->name('help-meeting.store');
 
     ///doctor
     Route::get('/doctor', [HelpController::class, 'doctorIndex'])->name('help-doctor.index');
     Route::get('/{help}/show-doctor', [HelpController::class, 'showHelpDoctor'])->name('help-show-doctor');
     Route::post('/{help}/doctor-activate', [HelpController::class, 'activateHelp'])->name('help-activate-doctor');
+    Route::post('/{help}/meet-doctor-submit', [HelpController::class, 'doctorSubmitMeet'])->name('help-meet-submit');
 });
 
 require __DIR__ . '/auth.php';

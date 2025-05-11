@@ -28,8 +28,8 @@ class HelpController extends Controller
     public function showHelpDoctor($id)
     {
         $help = Help::with(['doctor', 'patient'])->findOrFail($id);
-        $womenDiseases = WomenDisease::where('user_id',$help->patient->id)->get();
-        $sexuallyDiseases = SexuallyDisease::where('user_id',$help->patient->id)->get();
+        $womenDiseases = WomenDisease::where('user_id', $help->patient->id)->get();
+        $sexuallyDiseases = SexuallyDisease::where('user_id', $help->patient->id)->get();
 
         // Inertia ile veriyi gönderiyoruz
         return Inertia::render('Help/Doctor/Show', [
@@ -48,6 +48,14 @@ class HelpController extends Controller
 
         // Inertia ile veriyi gönderiyoruz
         return redirect()->route('help-doctor.index')->with('success', 'Talep başarıyla onaylandı.');
+    }
+
+    public function doctorSubmitMeet($id)
+    {
+        $help = Help::findOrFail($id);
+        $help->meeting_status = 'Onaylandı'; // Randevu durumu
+        $help->save();
+        return redirect()->route('help-doctor.index')->with('success', 'Randevu başarıyla onaylandı.');
     }
     //// patient
 
@@ -116,6 +124,21 @@ class HelpController extends Controller
         return Inertia::render('Help/Disease/Show', [
             'help' => $help
         ]);
+    }
+
+    public function meetStore(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'meeting_date' => 'required|date',
+        ]);
+
+        $help = Help::findOrFail($id);
+        $help->meeting_date = $validated['meeting_date'];
+        $help->meeting_status = 'Bekleniyor'; // Randevu durumu
+        $help->save();
+
+        // Inertia ile veriyi gönderiyoruz
+        return redirect()->route('help-disease.index')->with('success', 'Randevu başarıyla oluşturuldu.');
     }
 
 

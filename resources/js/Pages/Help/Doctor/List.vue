@@ -51,6 +51,8 @@ const handleClickProcess = (id) => {
             <TableHeader>
                 <TableRow>
                     <TableHead>Detay</TableHead>
+                    <TableHead>Randevu Bekleniyor Mu</TableHead>
+
                     <TableHead>ID</TableHead>
                     <TableHead>Hasta</TableHead>
                     <TableHead>Oluşturulma Tarihi</TableHead>
@@ -72,18 +74,16 @@ const handleClickProcess = (id) => {
                             <DropdownMenuContent>
                                 <DropdownMenuItem
                                     :as="Link"
-                                    :href="
-                                        route(
-                                            'help-show-doctor',
-                                            data.id
-                                        )
-                                    "
+                                    :href="route('help-show-doctor', data.id)"
                                     class="cursor-pointer"
                                 >
                                     Görüntüle
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
+                    </TableCell>
+                    <TableCell>
+                        {{ data.meeting_status == "Bekleniyor" ? "✔️" : "❌" }}
                     </TableCell>
                     <TableCell>{{ data.id }}</TableCell>
                     <TableCell

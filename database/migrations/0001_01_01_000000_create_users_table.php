@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('district')->nullable(); // 
             $table->string('address')->nullable(); // 
             $table->float('consultation_price')->nullable(); // 
-            $table->json('ratings')->nullable(); // 
+            $table->float('ratings')->nullable(); // 
 
             $table->rememberToken();
             $table->timestamps();

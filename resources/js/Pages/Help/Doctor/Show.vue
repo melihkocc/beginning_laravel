@@ -6,7 +6,7 @@ import Textarea from "@/components/ui/textarea/Textarea.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import { Check, MessageCircle } from "lucide-vue-next";
-import { onMounted, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 import {
     Table,
     TableBody,
@@ -16,6 +16,16 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 import { Link2 } from "lucide-vue-next";
 import {
     DropdownMenu,
@@ -23,6 +33,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Calendar from "@/components/ui/calendar/Calendar.vue";
+
+const dayjs = inject("dayjs");
+
 const breadcrumbs = ref([
     {
         title: "Talepler",
@@ -51,6 +65,16 @@ onMounted(() => {
     sexuallyDiseases.value = props.sexuallyDiseases;
     womenDiseases.value = props.womenDiseases;
 });
+
+const meetForm = useForm({});
+
+const submitMeet = () => {
+    meetForm.post(route("help-meet-submit", props.help.id), {
+        onSuccess: () => {
+            meetForm.reset();
+        },
+    });
+};
 </script>
 
 <template>
@@ -60,63 +84,103 @@ onMounted(() => {
             <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-6">
                 <div>
                     <Title text="Talep Detay Görüntüle" />
-                    <div class="mt-2 text-sm text-gray-600">
+                    <div class="mt-2 text-sm">
                         Oluşturulma Tarihi :
                         {{ $dayjs(props.help.created_at).format("DD/MM/YYYY") }}
                     </div>
                 </div>
                 <div
-                    v-if="props.help.status"
-                    class="flex lg:justify-end md:justify-end justify-start items-center"
+                    class="flex lg:justify-end md:justify-end justify-start items-center gap-5"
                 >
-                    <Link :href="route('help-message.show', props.help.id)"
-                        ><Button processbutton>
-                            <MessageCircle /> Mesajlaş</Button
-                        ></Link
+                    <div
+                        v-if="props.help.status"
+                        class="flex lg:justify-end md:justify-end justify-start items-center"
                     >
-                </div>
-                <div
-                    v-else
-                    class="flex lg:justify-end md:justify-end justify-start items-center"
-                >
-                    <Button @click="activate" processbutton>
-                        <Check /> Talebi Onayla</Button
+                        <Link :href="route('help-message.show', props.help.id)"
+                            ><Button processbutton>
+                                <MessageCircle /> Mesajlaş</Button
+                            ></Link
+                        >
+                    </div>
+                    <div
+                        v-else
+                        class="flex lg:justify-end md:justify-end justify-start items-center"
                     >
+                        <Button @click="activate" processbutton>
+                            <Check /> Talebi Onayla</Button
+                        >
+                    </div>
+                    <div v-if="props.help.meeting_status == 'Bekleniyor'">
+                        <Sheet>
+                            <SheetTrigger>
+                                <Button processbutton
+                                    ><Check /> Randevu Onayla</Button
+                                >
+                            </SheetTrigger>
+                            <SheetContent>
+                                <SheetHeader>
+                                    <SheetTitle>Randevu Onayla</SheetTitle>
+                                    <SheetDescription>
+                                        {{ props.help.patient.name }}
+                                        {{ props.help.patient.surname }} adlı
+                                        hastanın randevusunu onaylıyorsunuz.
+                                    </SheetDescription>
+                                    <div>
+                                        <Label>Randevu Zamanı</Label>
+                                        <div class="text-sm font-semibold">
+                                            {{
+                                                dayjs(
+                                                    props.help.meeting_date
+                                                ).format("DD/MM/YYYY HH:mm")
+                                            }}
+                                        </div>
+                                    </div>
+                                    <Button
+                                        @click="submitMeet"
+                                        class="mt-3"
+                                        processbutton
+                                    >
+                                        <Check /> Onayla</Button
+                                    >
+                                </SheetHeader>
+                            </SheetContent>
+                        </Sheet>
+                    </div>
                 </div>
             </div>
 
             <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-8">
                 <!-- Patient Details -->
                 <div
-                    class="bg-gray-50 border border-gray-300 rounded-lg shadow-lg p-6"
+                    class="bg-gray-50 border border-gray-300 rounded-lg shadow-lg p-6 dark:bg-gray-900 dark:border-gray-700"
                 >
-                    <h3 class="text-lg font-bold text-gray-700 mb-4">
-                        Hasta Bilgileri
-                    </h3>
+                    <h3 class="text-lg font-bold mb-4">Hasta Bilgileri</h3>
                     <ul class="space-y-3">
-                        <li class="text-gray-600">
+                        <li class="">
                             <strong>Ad Soyad:</strong>
                             {{ props.help.patient.name }}
                             {{ props.help.patient.surname }}
                         </li>
-                        <li class="text-gray-600">
+                        <li class="">
+                            <strong>Cinsiyet:</strong>
+                            {{
+                                props.help.patient.gender == "erkek"
+                                    ? "Erkek"
+                                    : "Kadın"
+                            }}
+                        </li>
+                        <li class="">
                             <strong>E-posta:</strong>
                             {{ props.help.patient.email }}
-                        </li>
-                        <li class="text-gray-600">
-                            <strong>Telefon:</strong>
-                            {{ props.help.patient.phone }}
                         </li>
                     </ul>
                 </div>
                 <!-- Complaint Description -->
                 <div
-                    class="bg-gray-50 border border-gray-300 rounded-lg shadow-lg p-6"
+                    class="bg-gray-50 border border-gray-300 rounded-lg shadow-lg p-6 dark:bg-gray-900 dark:border-gray-700"
                 >
-                    <h3 class="text-lg font-bold text-gray-700 mb-4">
-                        Şikayet Açıklaması
-                    </h3>
-                    <p class="text-gray-600 leading-relaxed">
+                    <h3 class="text-lg font-bold mb-4">Şikayet Açıklaması</h3>
+                    <p class="leading-relaxed">
                         {{ props.help.complaint_description }}
                     </p>
                 </div>
